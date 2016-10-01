@@ -1,5 +1,7 @@
 language: csharp
 solution: Sudoku.sln
+before_install:
+  - sudo apt-get install nunit-console
 after_script:
   - nunit-console ./Tests/bin/Release/Tests.dll
 
