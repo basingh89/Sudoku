@@ -3,6 +3,7 @@ solution: Sudoku.sln
 install:
   - nuget restore Sudoku.sln
   - sudo apt-get install nunit-console
-after_script:
+script:
+  - xbuild /p:Configuration=Release Sudoku.sln
   - nunit-console ./Tests/bin/Release/Tests.dll
 
