@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F719E206-5335-45B0-8B4C-B1ED03988479}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Tests</RootNamespace>
+    <RootNamespace>SudokuTests</RootNamespace>
     <AssemblyName>Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
@@ -35,6 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Sudoku.cs" />
+    <Compile Include="Cell.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
