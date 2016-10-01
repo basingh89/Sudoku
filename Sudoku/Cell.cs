@@ -1,24 +1,40 @@
 ﻿using System;
+using System.Linq;
 
 namespace SudokuSolver
 {
 	public class Cell
 	{
 		private readonly Sudoku sudoku;
-		private uint givenValue;
-		private uint solvedValue;
+		private readonly uint Column, Row;
+		private uint givenValue, solvedValue;
 
 		/// <summary>
 		/// Initializes a new instance with unknown value.
 		/// </summary>
 		/// <param name="sudoku">Sudoku</param>
+		/// <param name="column">Column</param>
+		/// <param name="row">Row</param>
 		/// <exception cref="ArgumentNullException"></exception>
-		public Cell (Sudoku sudoku)
+		/// <exception cref="IndexOutOfRangeException"></exception>
+		public Cell (Sudoku sudoku, uint column, uint row)
 		{
+			// sudoku
 			if (sudoku == null)
 				throw new ArgumentNullException ("Sudoku");
-
 			this.sudoku = sudoku;
+
+			// column
+			if (column >= this.sudoku.Length)
+				throw new IndexOutOfRangeException ("Column");
+			this.Column = column;
+
+			//row
+			if (row >= this.sudoku.Length)
+				throw new IndexOutOfRangeException ("Row");
+			this.Row = row;
+
+			// Initialize values
 			Reset ();
 		}
 
@@ -26,9 +42,13 @@ namespace SudokuSolver
 		/// Initializes a new instance with the given value.
 		/// </summary>
 		/// <param name="sudoku">Sudoku</param>
+		/// <param name="column">Column</param>
+		/// <param name="row">Row</param>
 		/// <param name="value">Value</param>
 		/// <exception cref="ArgumentNullException"></exception>
-		public Cell (Sudoku sudoku, uint value) : this (sudoku)
+		/// <exception cref="IndexOutOfRangeException"></exception>
+		/// <exception cref="ArgumentOutOfRangeException"></exception>
+		public Cell (Sudoku sudoku, uint column, uint row, uint value) : this (sudoku, column, row)
 		{
 			Value = value;
 		}
@@ -65,6 +85,7 @@ namespace SudokuSolver
 		/// </summary>
 		/// <value>The value of the cell</value>
 		/// <exception cref="ArgumentOutOfRangeException"></exception>
+		/// <exception cref="ArgumentException"></exception>
 		public uint Value {
 			get {
 				if (IsGiven)
@@ -74,13 +95,94 @@ namespace SudokuSolver
 
 				return 0U;
 			}
+
 			set {
 				if (value > sudoku.Length)
-					throw new ArgumentOutOfRangeException ("Value greater than Sudoku length");
+					throw new ArgumentOutOfRangeException (this + ": Value greater than Sudoku length");
 
+				// save old value before reset
+				uint old = givenValue;
 				Reset ();
+
+				// check if value is allowed
+				uint[] allowed = AllowedValue;
+				if (!allowed.Contains (value)) {
+					givenValue = old;
+					throw new ArgumentException (this + ": Value now allowed");
+				}
+
 				givenValue = value;
 			}
+		}
+
+		public uint[] AllowedValue {
+			get {
+				if (IsGiven)
+					return new uint[] { givenValue };
+
+				bool[] taken = new bool[sudoku.Length + 1U];
+
+				for (uint index = 0U; index < sudoku.Length; index++) {
+
+					// column vector
+					if (index != Column)
+						taken [sudoku [index, Row].Value] = true;
+
+					// row vector
+					if (index != Row)
+						taken [sudoku [Column, index].Value] = true;
+
+					// square box
+					uint boxIndex = index % sudoku.Rank;
+					uint column = (Column % sudoku.Rank) + (index - boxIndex) / sudoku.Rank;
+					uint row = (Row % sudoku.Rank) + boxIndex;
+					if ((column != Column) && (row != Row))
+						taken [sudoku [column, row].Value] = true;
+				}
+
+				uint[] allowed = new uint[taken.Where ((value, index) => index > 0).Count (value => !value)];
+				if (allowed.Length == 0)
+					throw new ArgumentException (this + ": No values allowed");
+
+				uint allowedIndex = 0U;
+				for (uint index = 1U; index < taken.Length; index++)
+					if (!taken [index])
+						allowed [allowedIndex++] = index;
+
+				return allowed;
+			}
+		}
+
+
+		/// <summary>
+		/// Solve the value of the cell.
+		/// </summary>
+		/// <param name="force">If set to <c>true</c>, force to resolve
+		public bool Solve (bool force)
+		{
+			if (IsGiven)
+				return false;
+			
+			if (!force && IsSolved)
+				return false;
+
+
+			uint[] allowed = AllowedValue;
+
+			if (allowed.Length != 1)
+				return false;
+
+			solvedValue = allowed [0];
+			return true;
+		}
+
+		/// <summary>
+		/// Returns a <see cref="String"/> that represents the current <see cref="Cell"/>.
+		/// </summary>
+		/// <returns>A <see cref="String"/> that represents the current <see cref="Cell"/>.</returns>
+		public override string ToString ()
+		{
+			return string.Format ("Cell[{0}, {1}]", Column, Row);
 		}
 	}
 }

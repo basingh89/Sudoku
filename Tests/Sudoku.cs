@@ -57,5 +57,27 @@ namespace SudokuTests
 			SudokuSolver.Cell cell = sudoku [3U, 3U];
 			Assert.IsNotNull (cell);
 		}
+
+		[Test]
+		public void CountUnknown ()
+		{
+			SudokuSolver.Sudoku sudoku = new SudokuSolver.Sudoku (3U);
+			Assert.AreEqual (81U, sudoku.CountUnknown);
+		}
+
+		[Test]
+		public void NotSolved ()
+		{
+			SudokuSolver.Sudoku sudoku = new SudokuSolver.Sudoku (3U);
+			Assert.IsFalse (sudoku.IsSolved);
+		}
+
+		[Test]
+		public void EmptySolve ()
+		{
+			SudokuSolver.Sudoku sudoku = new SudokuSolver.Sudoku (3U);
+			sudoku.Solve (true);
+			Assert.IsFalse (sudoku.IsSolved);
+		}
 	}
 }

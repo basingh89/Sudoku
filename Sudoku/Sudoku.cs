@@ -32,8 +32,12 @@ namespace SudokuSolver
 		{
 			cells = new Cell[Count];
 
-			for (uint index = 0U; index < Count; index++)
-				cells [index] = new Cell (this);
+			for (uint index = 0U; index < Count; index++) {
+				uint row = index % Length;
+				uint column = (index - row) / Length;
+
+				cells [index] = new Cell (this, column, row);
+			}
 		}
 
 		/// <summary>
@@ -75,6 +79,23 @@ namespace SudokuSolver
 
 				return cells [row + column * Length];
 			}
+		}
+
+		/// <summary>
+		/// Returns whether Sudoku is solved.
+		/// </summary>
+		/// <value><c>true</c> if this Sudoku is solved; otherwise, <c>false</c>.</value>
+		public bool IsSolved { get { return cells.All (cell => !cell.IsUnknown); } }
+
+		public void Solve (bool force)
+		{
+			bool anySolved = false;
+
+			do {
+				anySolved = false;
+				foreach (Cell cell in cells)
+					anySolved |= cell.Solve (force);
+			} while(anySolved);
 		}
 	}
 }
