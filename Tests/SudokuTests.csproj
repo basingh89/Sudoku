@@ -40,4 +40,10 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sudoku\Sudoku.csproj">
+      <Project>{AA63BE18-9E68-4D59-879D-F718EAC24D96}</Project>
+      <Name>Sudoku</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
