@@ -6,6 +6,5 @@ namespace SudokuTests
 	[TestFixture]
 	public class Cell
 	{
-		
 	}
 }

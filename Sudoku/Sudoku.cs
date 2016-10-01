@@ -33,7 +33,7 @@ namespace SudokuSolver
 			cells = new Cell[Count];
 
 			for (uint index = 0U; index < Count; index++)
-				cells [index] = new Cell ();
+				cells [index] = new Cell (this);
 		}
 
 		/// <summary>
