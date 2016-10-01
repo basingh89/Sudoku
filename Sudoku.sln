@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SudokuTests", "Tests\SudokuTests.csproj", "{F719E206-5335-45B0-8B4C-B1ED03988479}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sudoku", "Sudoku\Sudoku.csproj", "{AA63BE18-9E68-4D59-879D-F718EAC24D96}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SudokuSolver", "Sudoku\SudokuSolver.csproj", "{AA63BE18-9E68-4D59-879D-F718EAC24D96}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

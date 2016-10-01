@@ -34,16 +34,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Test.cs" />
+    <Compile Include="Sudoku.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sudoku\Sudoku.csproj">
+    <ProjectReference Include="..\Sudoku\SudokuSolver.csproj">
       <Project>{AA63BE18-9E68-4D59-879D-F718EAC24D96}</Project>
-      <Name>Sudoku</Name>
+      <Name>SudokuSolver</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
