@@ -1,0 +1,19 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Sudoku", "Sudoku\Sudoku.shproj", "{7FE62445-035C-452B-8DA1-5931C4229939}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{F719E206-5335-45B0-8B4C-B1ED03988479}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F719E206-5335-45B0-8B4C-B1ED03988479}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F719E206-5335-45B0-8B4C-B1ED03988479}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F719E206-5335-45B0-8B4C-B1ED03988479}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F719E206-5335-45B0-8B4C-B1ED03988479}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
