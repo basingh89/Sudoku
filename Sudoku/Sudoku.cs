@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace SudokuSolver
 {
@@ -85,6 +86,24 @@ namespace SudokuSolver
 
                 return cells[row + column * Length];
             }
+        }
+
+        /// <summary>
+        /// Returns an enumrable at the given column index.
+        /// </summary>
+        /// <param name="column">Column Index</param>
+        public IEnumerable<Cell> Column(uint column)
+        {
+            return cells.Where((cell, index) => column == (index - index % Length) / Length);
+        }
+
+        /// <summary>
+        /// Returns an enumrable at the given row index.
+        /// </summary>
+        /// <param name="row">Row Index</param>
+        public IEnumerable<Cell> Row(uint row)
+        {
+            return cells.Where((cell, index) => row == index % Length);
         }
 
         /// <summary>

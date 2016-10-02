@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 
 namespace SudokuSolver
 {
@@ -30,10 +31,8 @@ namespace SudokuSolver
         static void Write(string path, Sudoku sudoku)
         {
             using (StreamWriter writer = new StreamWriter(path))
-            {
-                throw new NotImplementedException();
-            }
-
+                for (uint row = 0U; row < sudoku.Length; row++)
+                    writer.WriteLine(string.Join(",", sudoku.Row(row).Select(cell => cell.Value)));
         }
     }
 }
