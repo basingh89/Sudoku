@@ -10,14 +10,15 @@ namespace SudokuTests
 		public void CreateInstance ()
 		{
 			SudokuSolver.Sudoku sudoku = new SudokuSolver.Sudoku (3U);
-			Assert.IsNotNull (sudoku);
+			Assert.NotNull (sudoku);
 		}
 
 		[Test]
 		public void Rank ()
 		{
-			SudokuSolver.Sudoku sudoku = new SudokuSolver.Sudoku (3U);
-			Assert.AreEqual (3U, sudoku.Rank);
+			uint rank = 3U;
+			SudokuSolver.Sudoku sudoku = new SudokuSolver.Sudoku (rank);
+			Assert.AreEqual (rank, sudoku.Rank);
 		}
 
 		[Test]
@@ -55,7 +56,16 @@ namespace SudokuTests
 		{
 			SudokuSolver.Sudoku sudoku = new SudokuSolver.Sudoku (3U);
 			SudokuSolver.Cell cell = sudoku [3U, 3U];
-			Assert.IsNotNull (cell);
+			Assert.NotNull (cell);
+		}
+
+		[Test]
+		public void IndexCheck ()
+		{
+			SudokuSolver.Sudoku sudoku = new SudokuSolver.Sudoku (4U);
+			SudokuSolver.Cell cell = sudoku [15U, 3U];
+			Assert.AreEqual (15U, cell.Column);
+			Assert.AreEqual (3U, cell.Row);
 		}
 
 		[Test]
@@ -69,7 +79,7 @@ namespace SudokuTests
 		public void NotSolved ()
 		{
 			SudokuSolver.Sudoku sudoku = new SudokuSolver.Sudoku (3U);
-			Assert.IsFalse (sudoku.IsSolved);
+			Assert.False (sudoku.IsSolved);
 		}
 
 		[Test]
@@ -77,7 +87,7 @@ namespace SudokuTests
 		{
 			SudokuSolver.Sudoku sudoku = new SudokuSolver.Sudoku (3U);
 			sudoku.Solve (true);
-			Assert.IsFalse (sudoku.IsSolved);
+			Assert.False (sudoku.IsSolved);
 		}
 	}
 }

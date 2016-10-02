@@ -6,7 +6,7 @@ namespace SudokuSolver
 	public class Cell
 	{
 		private readonly Sudoku sudoku;
-		private readonly uint Column, Row;
+		private readonly uint sudokuColumn, sudokuRow;
 		private uint givenValue, solvedValue;
 
 		/// <summary>
@@ -27,12 +27,12 @@ namespace SudokuSolver
 			// column
 			if (column >= this.sudoku.Length)
 				throw new IndexOutOfRangeException ("Column");
-			this.Column = column;
+			sudokuColumn = column;
 
 			//row
 			if (row >= this.sudoku.Length)
 				throw new IndexOutOfRangeException ("Row");
-			this.Row = row;
+			sudokuRow = row;
 
 			// Initialize values
 			Reset ();
@@ -61,6 +61,18 @@ namespace SudokuSolver
 			givenValue = 0U;
 			solvedValue = 0U;
 		}
+
+		/// <summary>
+		/// Gets the column.
+		/// </summary>
+		/// <value>The column.</value>
+		public uint Column { get { return sudokuColumn; } }
+
+		/// <summary>
+		/// Gets the row.
+		/// </summary>
+		/// <value>The row.</value>
+		public uint Row { get { return sudokuRow; } }
 
 		/// <summary>
 		/// Returns whether the cell has a given value.
@@ -126,17 +138,17 @@ namespace SudokuSolver
 
 					// column vector
 					if (index != Column)
-						taken [sudoku [index, Row].Value] = true;
+						taken [sudoku [index, sudokuRow].Value] = true;
 
 					// row vector
 					if (index != Row)
-						taken [sudoku [Column, index].Value] = true;
+						taken [sudoku [sudokuColumn, index].Value] = true;
 
 					// square box
 					uint boxIndex = index % sudoku.Rank;
-					uint column = (Column % sudoku.Rank) + (index - boxIndex) / sudoku.Rank;
-					uint row = (Row % sudoku.Rank) + boxIndex;
-					if ((column != Column) && (row != Row))
+					uint column = (sudokuColumn % sudoku.Rank) + (index - boxIndex) / sudoku.Rank;
+					uint row = (sudokuRow % sudoku.Rank) + boxIndex;
+					if ((column != sudokuColumn) && (row != sudokuRow))
 						taken [sudoku [column, row].Value] = true;
 				}
 
@@ -182,7 +194,7 @@ namespace SudokuSolver
 		/// <returns>A <see cref="String"/> that represents the current <see cref="Cell"/>.</returns>
 		public override string ToString ()
 		{
-			return string.Format ("Cell[{0}, {1}]", Column, Row);
+			return string.Format ("Cell[{0}, {1}]", sudokuColumn, sudokuRow);
 		}
 	}
 }
